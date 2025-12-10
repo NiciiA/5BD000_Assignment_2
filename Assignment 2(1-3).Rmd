@@ -8,6 +8,7 @@ output: html_document
 ## 0.Data processing
 
 ```{r}
+install.packages("pacman")
 pacman::p_load(char = c(
   "tidyverse","rms","haven","mgcv","epitools","logistf","nlpred",
   "geepack","skimr","pROC","tableone","emmeans","glmtoolbox",
@@ -101,9 +102,20 @@ nrow(dc)
 
 ```
 
+```{r}
+all_ids <- d$id
+cleaned_ids <- dc$id
+
+missing_ids <-setdiff(all_ids, cleaned_ids)
+missing_ids
+
+d[d$id %in% missing_ids,]
+```
+
 
 ## 1. Table 1
 ```{r}
+library(tableone)
 vars_cont <- c("age0", "sbp10", "cholmmol", "bmi")
 vars_cat  <- c("agegroup", "smokerf", "arcus0f", "dibpat0f", "chd69f")
 
@@ -142,8 +154,13 @@ Corneal arcus (arcus0f) — a possible visual indicator of lipid abnormalities.
 
 ```{r}
 # (c) 
-n_total <- nrow(dc)
+# This is the number of total persons included
+n_total <- nrow(d)
 n_total
+
+# this is the number of people with no na values.
+n_total_na_removed <- nrow(dc)
+n_total_na_removed
 
 # (d) overall prevalence of the disease
 prev_chd <- mean(dc$chd69 == 1)
