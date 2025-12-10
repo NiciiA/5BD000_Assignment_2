@@ -226,61 +226,61 @@ Four logistic regression models were compared to evaluate whether age and BMI sh
 ```{r}
 #   
 # 
-# # ---- 1. Age × Smoking ----
-# m_age_smoke <- glm(chd69 ~ age0 * smokerf + sbp10 + cholmmol + bmi + arcus0f + dibpat0f,
-#                    data = dc, family = binomial)
-# p1 <- ggpredict(m_age_smoke, terms = c("age0", "smokerf"))
-# 
-# g1 <- plot(p1) +
-#   labs(title = "Age × Smoking",
-#        x = "Age", y = "Predicted probability") +
-#   theme_minimal() +
-#   theme(legend.position = "bottom")
-# 
-# # ---- 2. Cholesterol × BMI ----
-# m_chol_bp <- glm(chd69 ~ cholmmol * bmi + age0 + smokerf + sbp10 + arcus0f + dibpat0f,
-#                  data = dc, family = binomial)
-# p2 <- ggpredict(m_chol_bp, terms = c("bmi", "cholmmol [quantile]"))
-# p2$group <- factor(round(as.numeric(as.character(p2$group)), 1))
-# 
-# g2 <- plot(p2) +
-#   labs(title = "Cholesterol × BMI",
-#        x = "BMI", y = "Predicted probability") +
-#   theme_minimal() +
-#   theme(legend.position = "bottom")
-# 
-# # ---- 3. Age × Arcus ----
-# m_age_arcus <- glm(
-#   chd69 ~ age0 * arcus0f + sbp10 + cholmmol + smokerf + bmi + dibpat0f,
-#   data = dc, family = binomial
-# )
-# 
-# p3 <- ggpredict(m_age_arcus, terms = c("age0", "arcus0f"))
-# 
-# g3 <- plot(p3) +
-#   labs(
-#     title = "Age × Arcus",
-#     x = "Age",
-#     y = "Predicted probability",
-#     color = "Arcus (0 = No, 1 = Yes)"
-#   ) +
-#   theme_minimal() +
-#   theme(legend.position = "bottom")
-# 
-# 
-# # ---- 4. Smoking × Blood pressure ----
-# m_smoke_bp <- glm(chd69 ~ smokerf * sbp10 + age0 + cholmmol + bmi + arcus0f + dibpat0f,
-#                   data = dc, family = binomial)
-# p4 <- ggpredict(m_smoke_bp, terms = c("sbp10", "smokerf"))
-# 
-# g4 <- plot(p4) +
-#   labs(title = "Smoking × Blood Pressure",
-#        x = "Systolic BP (×10 mmHg)", y = "Predicted probability") +
-#   theme_minimal() +
-#   theme(legend.position = "bottom")
-# 
-# # ---- Combine into 2×2 grid ----
-# (g1 + g2) / (g3 + g4)
+# ---- 1. Age × Smoking ----
+m_age_smoke <- glm(chd69 ~ age0 * smokerf + sbp10 + cholmmol + bmi + arcus0f + dibpat0f,
+                   data = dc, family = binomial)
+p1 <- ggpredict(m_age_smoke, terms = c("age0", "smokerf"))
+
+g1 <- plot(p1) +
+  labs(title = "Age x Smoking",
+       x = "Age", y = "Predicted probability") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+# ---- 2. Cholesterol × BMI ----
+m_chol_bp <- glm(chd69 ~ cholmmol * bmi + age0 + smokerf + sbp10 + arcus0f + dibpat0f,
+                 data = dc, family = binomial)
+p2 <- ggpredict(m_chol_bp, terms = c("bmi", "cholmmol [quantile]"))
+p2$group <- factor(round(as.numeric(as.character(p2$group)), 1))
+
+g2 <- plot(p2) +
+  labs(title = "Cholesterol x BMI",
+       x = "BMI", y = "Predicted probability") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+# ---- 3. Age × Arcus ----
+m_age_arcus <- glm(
+  chd69 ~ age0 * arcus0f + sbp10 + cholmmol + smokerf + bmi + dibpat0f,
+  data = dc, family = binomial
+)
+
+p3 <- ggpredict(m_age_arcus, terms = c("age0", "arcus0f"))
+
+g3 <- plot(p3) +
+  labs(
+    title = "Age x Arcus",
+    x = "Age",
+    y = "Predicted probability",
+    color = "Arcus (0 = No, 1 = Yes)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+
+# ---- 4. Smoking × Blood pressure ----
+m_smoke_bp <- glm(chd69 ~ smokerf * sbp10 + age0 + cholmmol + bmi + arcus0f + dibpat0f,
+                  data = dc, family = binomial)
+p4 <- ggpredict(m_smoke_bp, terms = c("sbp10", "smokerf"))
+
+g4 <- plot(p4) +
+  labs(title = "Smoking x Blood Pressure",
+       x = "Systolic BP (x10 mmHg)", y = "Predicted probability") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+# ---- Combine into 2×2 grid ----
+(g1 + g2) / (g3 + g4)
 
 ```
 
